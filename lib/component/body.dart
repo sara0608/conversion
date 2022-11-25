@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'expression.dart';
 import 'conversion.dart';
+import 'userSetting.dart';
 
   class Body extends StatefulWidget {
     static of(BuildContext context, {bool root = false}) => root
@@ -40,29 +41,16 @@ import 'conversion.dart';
               children: [
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.all(10),
-                    child: TextField(
-                      controller: TextEditingController(text: selectedTarget),
-                      autofocus: false,
-                      textAlign: TextAlign.right,
-                      textAlignVertical: TextAlignVertical.bottom,
-                      enabled: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                          borderSide: BorderSide(width: 3, color: Colors.indigoAccent),
-                        ),
+                    padding: EdgeInsets.all(5),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        textStyle: const TextStyle(fontSize: 20),
+                        primary: userSetting().getColor(),
+                        alignment: Alignment.centerRight,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))
                       ),
-                      keyboardType: TextInputType.number,
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        height: 0.1,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      onPressed: () {},
+                      child: const Text('5'),
                     ),
                   ),
                 ),
@@ -74,7 +62,7 @@ import 'conversion.dart';
                       elevation: 16,
                       underline: Container(
                         height: 2,
-                        color: Colors.indigoAccent,
+                        color: userSetting().getColor(),
                       ),
                       iconSize: 0,
                       onChanged: (String? newValue) {
@@ -101,13 +89,13 @@ import 'conversion.dart';
                     Expanded(
                         child: Container(
                           height: 35,
-                          color: Colors.blue,
+                          color: Colors.white,
                           alignment: Alignment.centerRight,
                           padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
                           child: Text(
                             target.values.elementAt(index),
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -116,13 +104,13 @@ import 'conversion.dart';
                     Expanded(
                         child: Container(
                           height: 35,
-                          color: Colors.blue,
+                          color: Colors.white,
                           alignment: Alignment.centerLeft,
                           padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                           child: Text(
                             unit.values.elementAt(index),
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -132,8 +120,10 @@ import 'conversion.dart';
                 ),
               );
             },
-            separatorBuilder: (BuildContext context, int index) => const Divider(
-              color: Colors.white,
+            separatorBuilder: (BuildContext context, int index) => Divider(
+              color: userSetting().getColor(),
+              height: 5,
+              thickness: 2,
             ),
           ),
         ),

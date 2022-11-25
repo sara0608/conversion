@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:conversion/component/drawer.dart';
 import 'package:conversion/component/body.dart';
 import 'package:conversion/component/expression.dart';
+import 'package:conversion/component/userSetting.dart';
 
 void main() {
   runApp(MaterialApp(home: MyApp()));
@@ -55,10 +55,18 @@ class _MyApp extends State<MyApp> {
       title: 'Conversion_if_units',
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          appBar: AppBar(title: Text('단위 변환기', style: TextStyle(fontWeight: FontWeight.bold,),)),
+          appBar: AppBar(
+              title: Text('단위 변환기', style: TextStyle(color: Colors.white),),
+              backgroundColor: userSetting().getColor(),
+              centerTitle: true,
+          ),
           body: Body(),
           drawer: Drawer(
-            child: ListView.builder(
+            width: 250,
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
                 itemCount: title.length,
                 itemBuilder: (BuildContext context, int index){
 
@@ -78,7 +86,7 @@ class _MyApp extends State<MyApp> {
                           visible: visibleYn01.value,
                           child: ListTile(
                             title: Text(title[index].elementAt(1).toString()),
-                            leading: Icon(Icons.arrow_right),
+                            leading: Icon(Icons.arrow_right, color: userSetting().getColor()),
                             minLeadingWidth : 10,
                             visualDensity: VisualDensity(vertical: -3),
                             dense: true,
@@ -101,7 +109,7 @@ class _MyApp extends State<MyApp> {
                           visible: visibleYn02.value,
                           child: ListTile(
                             title: Text(title[index].elementAt(1).toString()),
-                            leading: Icon(Icons.arrow_right),
+                            leading: Icon(Icons.arrow_right, color: userSetting().getColor()),
                             minLeadingWidth : 10,
                             visualDensity: VisualDensity(vertical: -3),
                             dense: true,
@@ -120,93 +128,163 @@ class _MyApp extends State<MyApp> {
                           visible: visibleYn03.value,
                           child: ListTile(
                             title: Text(title[index].elementAt(1).toString()),
-                            leading: Icon(Icons.arrow_right),
+                            leading: Icon(Icons.arrow_right, color: userSetting().getColor()),
                             minLeadingWidth : 10,
                             visualDensity: VisualDensity(vertical: -3),
-                            dense: true,
-                            onTap: () {},
-                          ),
-                        );
-                      },
-                    );
-                  }
-                  // index(4) = 기계공학
-                  if(title[index].elementAt(0)==4){
-                    return ValueListenableBuilder(
-                      valueListenable: visibleYn04,
-                      builder: (BuildContext context, bool value, Widget? child) {
-                        return Visibility(
-                          visible: visibleYn04.value,
-                          child: ListTile(
-                            title: Text(title[index].elementAt(1).toString()),
-                            leading: Icon(Icons.arrow_right),
-                            minLeadingWidth : 10,
-                            visualDensity: VisualDensity(vertical: -3),
-                            dense: true,
-                            onTap: () {},
-                          ),
-                        );
-                      },
-                    );
-                  }
-                  // index(5) = 방사능
-                  if(title[index].elementAt(0)==5){
-                    return ValueListenableBuilder(
-                      valueListenable: visibleYn05,
-                      builder: (BuildContext context, bool value, Widget? child) {
-                        return Visibility(
-                          visible: visibleYn05.value,
-                          child: ListTile(
-                            title: Text(title[index].elementAt(1).toString()),
-                            leading: Icon(Icons.arrow_right),
-                            minLeadingWidth : 10,
-                            visualDensity: VisualDensity(vertical: -3),
-                            dense: true,
-                            onTap: () {},
-                          ),
-                        );
-                      },
-                    );
-                  }
-                  // index(0)
-                  ValueNotifier<bool> boolList = ValueNotifier<bool> (true);
-                  return ValueListenableBuilder(
-                      valueListenable: boolList,
-                      builder: (BuildContext context, bool value, Widget? child) {
-                        return ListTile(
-                            title: Text(title[index].elementAt(1).toString()),
-                            trailing: boolList.value ? Icon(Icons.add) : Icon(Icons.remove),
-                            onTap: () {
-                              if (title[index].elementAt(1).toString() ==
-                                  title[0].elementAt(1).toString()) {
-                                visibleYn01.value = !visibleYn01.value;
-                                boolList.value = !boolList.value ;
-                              }
-                              else if (title[index].elementAt(1).toString() ==
-                                  title[13].elementAt(1).toString()) {
-                                visibleYn02.value = !visibleYn02.value;
-                                boolList.value = !boolList.value ;
-                              }
-                              else if (title[index].elementAt(1).toString() ==
-                                  title[26].elementAt(1).toString()) {
-                                visibleYn03.value = !visibleYn03.value;
-                                boolList.value = !boolList.value ;
-                              }
-                              else if (title[index].elementAt(1).toString() ==
-                                  title[35].elementAt(1).toString()) {
-                                visibleYn04.value = !visibleYn04.value;
-                                boolList.value = !boolList.value ;
-                              }
-                              else if (title[index].elementAt(1).toString() ==
-                                  title[52].elementAt(1).toString()) {
-                                visibleYn05.value = !visibleYn05.value;
-                                boolList.value = !boolList.value ;
-                              }
-                            }
+                                dense: true,
+                                onTap: () {},
+                              ),
+                            );
+                          },
                         );
                       }
-                  );
-                }
+                      // index(4) = 기계공학
+                      if(title[index].elementAt(0)==4){
+                        return ValueListenableBuilder(
+                          valueListenable: visibleYn04,
+                          builder: (BuildContext context, bool value, Widget? child) {
+                            return Visibility(
+                              visible: visibleYn04.value,
+                              child: ListTile(
+                                title: Text(title[index].elementAt(1).toString()),
+                                leading: Icon(Icons.arrow_right, color: userSetting().getColor()),
+                                minLeadingWidth : 10,
+                                visualDensity: VisualDensity(vertical: -3),
+                                dense: true,
+                                onTap: () {},
+                              ),
+                            );
+                          },
+                        );
+                      }
+                      // index(5) = 방사능
+                      if(title[index].elementAt(0)==5){
+                        return ValueListenableBuilder(
+                          valueListenable: visibleYn05,
+                          builder: (BuildContext context, bool value, Widget? child) {
+                            return Visibility(
+                              visible: visibleYn05.value,
+                              child: ListTile(
+                                title: Text(title[index].elementAt(1).toString()),
+                                leading: Icon(Icons.arrow_right, color: userSetting().getColor()),
+                                minLeadingWidth : 10,
+                                visualDensity: VisualDensity(vertical: -3),
+                                dense: true,
+                                onTap: () {},
+                              ),
+                            );
+                          },
+                        );
+                      }
+                      // index(0)
+                      ValueNotifier<bool> boolList = ValueNotifier<bool> (true);
+                      return ValueListenableBuilder(
+                          valueListenable: boolList,
+                          builder: (BuildContext context, bool value, Widget? child) {
+                            return ListTile(
+                                title: Text(title[index].elementAt(1).toString()),
+                                trailing: boolList.value ? Icon(Icons.add, color: userSetting().getColor()) : Icon(Icons.remove, color: userSetting().getColor()),
+                                onTap: () {
+                                  if (title[index].elementAt(1).toString() ==
+                                      title[0].elementAt(1).toString()) {
+                                    visibleYn01.value = !visibleYn01.value;
+                                    boolList.value = !boolList.value ;
+                                  }
+                                  else if (title[index].elementAt(1).toString() ==
+                                      title[13].elementAt(1).toString()) {
+                                    visibleYn02.value = !visibleYn02.value;
+                                    boolList.value = !boolList.value ;
+                                  }
+                                  else if (title[index].elementAt(1).toString() ==
+                                      title[26].elementAt(1).toString()) {
+                                    visibleYn03.value = !visibleYn03.value;
+                                    boolList.value = !boolList.value ;
+                                  }
+                                  else if (title[index].elementAt(1).toString() ==
+                                      title[35].elementAt(1).toString()) {
+                                    visibleYn04.value = !visibleYn04.value;
+                                    boolList.value = !boolList.value ;
+                                  }
+                                  else if (title[index].elementAt(1).toString() ==
+                                      title[52].elementAt(1).toString()) {
+                                    visibleYn05.value = !visibleYn05.value;
+                                    boolList.value = !boolList.value ;
+                                  }
+                                }
+                            );
+                          }
+                      );
+                    }
+                ),),
+                Container(
+                  height: 50,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          userSetting().setColor(Colors.pink);
+                          setState(() {});
+                        }, // Handle your callback
+                        child: Padding(
+                            padding: EdgeInsets.fromLTRB(0,10,10,10),
+                            child: Ink(height: 30, width: 30, color: Colors.pink)
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          userSetting().setColor(Colors.deepOrange);
+                          setState(() {});
+                        }, // Handle your callback
+                        child: Padding(
+                            padding: EdgeInsets.fromLTRB(0,10,10,10),
+                            child: Ink(height: 30, width: 30, color: Colors.deepOrange)
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          userSetting().setColor(Colors.green);
+                          setState(() {});
+                        }, // Handle your callback
+                        child: Padding(
+                            padding: EdgeInsets.fromLTRB(0,10,10,10),
+                            child: Ink(height: 30, width: 30, color: Colors.green)
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          userSetting().setColor(Colors.indigoAccent);
+                          setState(() {});
+                        }, // Handle your callback
+                        child: Padding(
+                            padding: EdgeInsets.fromLTRB(0,10,10,10),
+                            child: Ink(height: 30, width: 30, color: Colors.indigoAccent)
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          userSetting().setColor(Colors.deepPurpleAccent);
+                          setState(() {});
+                        }, // Handle your callback
+                        child: Padding(
+                            padding: EdgeInsets.fromLTRB(0,10,10,10),
+                            child: Ink(height: 30, width: 30, color: Colors.deepPurpleAccent)
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          userSetting().setColor(Colors.blueGrey);
+                          setState(() {});
+                        }, // Handle your callback
+                        child: Padding(
+                            padding: EdgeInsets.fromLTRB(0,10,10,10),
+                            child: Ink(height: 30, width: 30, color: Colors.blueGrey)
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           )
       )
