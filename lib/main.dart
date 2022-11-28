@@ -13,6 +13,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyApp extends State<MyApp> {
+  String appTitle = "길이";
 
   @override
   Widget build(BuildContext context) {
@@ -25,24 +26,32 @@ class _MyApp extends State<MyApp> {
         , {1, '각',   'Basic_007'}, {1, '유량', 'Basic_008'}
         , {1, '압력', 'Basic_009'}, {1, '진공압력', 'Basic_010'}
         , {1, '온도', 'Basic_011'}, {1, '온도차', 'Basic_012'}
-      , {0, '에너지/전기/빛', 'light'} //index : 13
-        , {2, '에너지'}, {2, '동력'}
-        , {2, '전류'}, {2, '전압'}
-        , {2, '자기장'}, {2, '정전용량'}
-        , {2, '전하량'}, {2, '자속'}
-        , {2, '각속도'}, {2, '인덕턴스'}
-        , {2, '조도'}, {2, '휘도'}
-      , {0, '물리/기계', 'physics'}      //index : 26
-        , {3, '힘'}, {3, '비체적'}, {3, '밀도'}, {3, '비열'}
-        , {3, '가속도'}, {3, '표면장력'}, {3, '비중량'}, {3, '토크'}
-      , {0, '기계공학', 'machine'}       //index : 35
-        , {4, '질량유량'}, {4, '엔탈피'}, {4, '엔트로피'}, {4, '확산계수'}
-        , {4, '점성계수'}, {4, '동점성계수'}, {4, '열전도율'}, {4, '투과율'}
-        , {4, '열유속'}, {4, '열저항'}, {4, '열저항율'}, {4, '열발생율'}
-        , {4, '열용량'}, {4, '열전달계수'}, {4, '열밀도'}, {4, '열차폐'}
-      , {0, '방사선', 'radiation'}        //index : 52
-        , {5, '방사능'}, {5, '조사선량'}, {5, '등가선량'}, {5, '흡수선량'}
-        , {5, '표면오염도'}, {5, '공기오염도'}, {5, '방사능농도'}
+      , {0, '에너지/전기/빛', 'Light'} //index : 13
+        , {2, '에너지', 'Light_001'}, {2, '동력', 'Light_002'}
+        , {2, '전류', 'Light_003'},   {2, '전압', 'Light_004'}
+        , {2, '자기장', 'Light_005'}, {2, '정전용량', 'Light_006'}
+        , {2, '전하량', 'Light_007'}, {2, '자속', 'Light_008'}
+        , {2, '각속도', 'Light_009'}, {2, '인덕턴스', 'Light_010'}
+        , {2, '조도', 'Light_011'},   {2, '휘도', 'Light_012'}
+      , {0, '물리/기계', 'Physics'}      //index : 26
+        , {3, '힘', 'Physics_001'},    {3, '비체적', 'Physics_002'}
+        , {3, '밀도', 'Physics_003'},   {3, '비열', 'Physics_004'}
+        , {3, '가속도', 'Physics_005'}, {3, '표면장력', 'Physics_006'}
+        , {3, '비중량', 'Physics_007'}, {3, '토크', 'Physics_008'}
+      , {0, '기계공학', 'Machine'}       //index : 35
+        , {4, '질량유량', 'Machine_001'}, {4, '엔탈피', 'Machine_002'}
+        , {4, '엔트로피', 'Machine_003'}, {4, '확산계수', 'Machine_004'}
+        , {4, '점성계수', 'Machine_005'}, {4, '동점성계수', 'Machine_006'}
+        , {4, '열전도율', 'Machine_007'}, {4, '투과율', 'Machine_008'}
+        , {4, '열유속', 'Machine_009'},   {4, '열저항', 'Machine_010'}
+        , {4, '열저항율', 'Machine_011'}, {4, '열발생율', 'Machine_012'}
+        , {4, '열용량', 'Machine_013'},   {4, '열전달계수', 'Machine_014'}
+        , {4, '열밀도', 'Machine_015'},   {4, '열차폐', 'Machine_016'}
+      , {0, '방사선', 'Radiation'}        //index : 52
+        , {5, '방사능', 'Radiation_001'},    {5, '조사선량', 'Radiation_002'}
+        , {5, '등가선량', 'Radiation_003'},  {5, '흡수선량', 'Radiation_004'}
+        , {5, '표면오염도', 'Radiation_005'}, {5, '공기오염도', 'Radiation_006'}
+        , {5, '방사능농도', 'Radiation_007'}
     ];
 
     ValueNotifier<bool> visibleYn01 = ValueNotifier<bool>(false);
@@ -50,13 +59,13 @@ class _MyApp extends State<MyApp> {
     ValueNotifier<bool> visibleYn03 = ValueNotifier<bool>(false);
     ValueNotifier<bool> visibleYn04 = ValueNotifier<bool>(false);
     ValueNotifier<bool> visibleYn05 = ValueNotifier<bool>(false);
-
+    
     return MaterialApp(
       title: 'Conversion_if_units',
       debugShowCheckedModeBanner: false,
       home: Scaffold(
           appBar: AppBar(
-              title: Text('단위 변환기', style: TextStyle(color: Colors.white),),
+              title: Text(appTitle),
               backgroundColor: userSetting().getColor(),
               centerTitle: true,
           ),
@@ -69,13 +78,6 @@ class _MyApp extends State<MyApp> {
                   child: ListView.builder(
                 itemCount: title.length,
                 itemBuilder: (BuildContext context, int index){
-
-                  // 초기화 ( 선택없이 나갔을때 중분류 열려있는 이슈)
-                  visibleYn01.value = false;
-                  visibleYn02.value = false;
-                  visibleYn03.value = false;
-                  visibleYn04.value = false;
-                  visibleYn05.value = false;
 
                   // index(1) = 기본
                   if(title[index].elementAt(0)==1){
@@ -113,7 +115,11 @@ class _MyApp extends State<MyApp> {
                             minLeadingWidth : 10,
                             visualDensity: VisualDensity(vertical: -3),
                             dense: true,
-                            onTap: () {},
+                            onTap: () {
+                              Expression().setExpression(title[index].elementAt(2).toString());
+                              Navigator.pop(context);
+                              setState(() {});
+                            },
                           ),
                         );
                       },
@@ -183,34 +189,65 @@ class _MyApp extends State<MyApp> {
                           builder: (BuildContext context, bool value, Widget? child) {
                             return ListTile(
                                 title: Text(title[index].elementAt(1).toString()),
-                                trailing: boolList.value ? Icon(Icons.add, color: userSetting().getColor()) : Icon(Icons.remove, color: userSetting().getColor()),
+                                trailing: Icon(Icons.add_box_rounded, color: userSetting().getColor()),
                                 onTap: () {
+
                                   if (title[index].elementAt(1).toString() ==
                                       title[0].elementAt(1).toString()) {
                                     visibleYn01.value = !visibleYn01.value;
+
+                                    visibleYn02.value = false;
+                                    visibleYn03.value = false;
+                                    visibleYn04.value = false;
+                                    visibleYn05.value = false;
+
                                     boolList.value = !boolList.value ;
                                   }
                                   else if (title[index].elementAt(1).toString() ==
                                       title[13].elementAt(1).toString()) {
                                     visibleYn02.value = !visibleYn02.value;
+
+                                    visibleYn01.value = false;
+                                    visibleYn03.value = false;
+                                    visibleYn04.value = false;
+                                    visibleYn05.value = false;
+
                                     boolList.value = !boolList.value ;
                                   }
                                   else if (title[index].elementAt(1).toString() ==
                                       title[26].elementAt(1).toString()) {
                                     visibleYn03.value = !visibleYn03.value;
+
+                                    visibleYn01.value = false;
+                                    visibleYn02.value = false;
+                                    visibleYn04.value = false;
+                                    visibleYn05.value = false;
+
                                     boolList.value = !boolList.value ;
                                   }
                                   else if (title[index].elementAt(1).toString() ==
                                       title[35].elementAt(1).toString()) {
                                     visibleYn04.value = !visibleYn04.value;
+
+                                    visibleYn01.value = false;
+                                    visibleYn02.value = false;
+                                    visibleYn03.value = false;
+                                    visibleYn05.value = false;
+
                                     boolList.value = !boolList.value ;
                                   }
                                   else if (title[index].elementAt(1).toString() ==
                                       title[52].elementAt(1).toString()) {
                                     visibleYn05.value = !visibleYn05.value;
+
+                                    visibleYn01.value = false;
+                                    visibleYn02.value = false;
+                                    visibleYn03.value = false;
+                                    visibleYn04.value = false;
+
                                     boolList.value = !boolList.value ;
                                   }
-                                }
+                                },
                             );
                           }
                       );
@@ -286,7 +323,23 @@ class _MyApp extends State<MyApp> {
                 ),
               ],
             ),
-          )
+          ),
+        onDrawerChanged: (isOpen){
+            if(!isOpen){
+              visibleYn01.value = false;
+              visibleYn02.value = false;
+              visibleYn03.value = false;
+              visibleYn04.value = false;
+              visibleYn05.value = false;
+            }
+            setState(() {
+              for(var i =0; i < title.length; i++){
+                if(title[i].elementAt(2) == Expression().getExpression()){
+                  appTitle = title[i].elementAt(1).toString();
+                }
+              }
+            });
+        },
       )
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'body.dart';
 
-Color customerColor = Colors.blueGrey;
+Color customerColor = Colors.deepOrange;
 
 class userSetting{
 

@@ -12,6 +12,10 @@ class Expression{
     expression_target_item = expression_target + '_001';
   }
 
+  getExpression(){
+    return expression_target;
+  }
+
   changeTargetItem(String _targetItem){
 
     if(_targetItem != ''){
