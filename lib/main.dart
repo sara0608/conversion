@@ -52,6 +52,9 @@ class _MyApp extends State<MyApp> {
         , {5, '등가선량', 'Radiation_003'},  {5, '흡수선량', 'Radiation_004'}
         , {5, '표면오염도', 'Radiation_005'}, {5, '공기오염도', 'Radiation_006'}
         , {5, '방사능농도', 'Radiation_007'}
+      , {0, '기타', 'Etc'}        //index : 60
+        , {6, '지진크기', 'Etc_001'},    {6, '전송속도', 'Etc_002'}
+        , {6, '저장용량', 'Etc_003'}
     ];
 
     ValueNotifier<bool> visibleYn01 = ValueNotifier<bool>(false);
@@ -59,6 +62,7 @@ class _MyApp extends State<MyApp> {
     ValueNotifier<bool> visibleYn03 = ValueNotifier<bool>(false);
     ValueNotifier<bool> visibleYn04 = ValueNotifier<bool>(false);
     ValueNotifier<bool> visibleYn05 = ValueNotifier<bool>(false);
+    ValueNotifier<bool> visibleYn06 = ValueNotifier<bool>(false);
     
     return MaterialApp(
       title: 'Conversion_if_units',
@@ -138,7 +142,11 @@ class _MyApp extends State<MyApp> {
                             minLeadingWidth : 10,
                             visualDensity: VisualDensity(vertical: -3),
                                 dense: true,
-                                onTap: () {},
+                                onTap: () {
+                                  Expression().setExpression(title[index].elementAt(2).toString());
+                                  Navigator.pop(context);
+                                  setState(() {});
+                                },
                               ),
                             );
                           },
@@ -157,7 +165,11 @@ class _MyApp extends State<MyApp> {
                                 minLeadingWidth : 10,
                                 visualDensity: VisualDensity(vertical: -3),
                                 dense: true,
-                                onTap: () {},
+                                onTap: () {
+                                  Expression().setExpression(title[index].elementAt(2).toString());
+                                  Navigator.pop(context);
+                                  setState(() {});
+                                },
                               ),
                             );
                           },
@@ -176,12 +188,39 @@ class _MyApp extends State<MyApp> {
                                 minLeadingWidth : 10,
                                 visualDensity: VisualDensity(vertical: -3),
                                 dense: true,
-                                onTap: () {},
+                                onTap: () {
+                                  Expression().setExpression(title[index].elementAt(2).toString());
+                                  Navigator.pop(context);
+                                  setState(() {});
+                                },
                               ),
                             );
                           },
                         );
                       }
+                    // index(6) = 기타
+                    if(title[index].elementAt(0)==6){
+                      return ValueListenableBuilder(
+                        valueListenable: visibleYn06,
+                        builder: (BuildContext context, bool value, Widget? child) {
+                          return Visibility(
+                            visible: visibleYn06.value,
+                            child: ListTile(
+                              title: Text(title[index].elementAt(1).toString()),
+                              leading: Icon(Icons.arrow_right, color: userSetting().getColor()),
+                              minLeadingWidth : 10,
+                              visualDensity: VisualDensity(vertical: -3),
+                              dense: true,
+                              onTap: () {
+                                Expression().setExpression(title[index].elementAt(2).toString());
+                                Navigator.pop(context);
+                                setState(() {});
+                              },
+                            ),
+                          );
+                        },
+                      );
+                    }
                       // index(0)
                       ValueNotifier<bool> boolList = ValueNotifier<bool> (true);
                       return ValueListenableBuilder(
@@ -200,6 +239,7 @@ class _MyApp extends State<MyApp> {
                                     visibleYn03.value = false;
                                     visibleYn04.value = false;
                                     visibleYn05.value = false;
+                                    visibleYn06.value = false;
 
                                     boolList.value = !boolList.value ;
                                   }
@@ -211,6 +251,7 @@ class _MyApp extends State<MyApp> {
                                     visibleYn03.value = false;
                                     visibleYn04.value = false;
                                     visibleYn05.value = false;
+                                    visibleYn06.value = false;
 
                                     boolList.value = !boolList.value ;
                                   }
@@ -222,6 +263,7 @@ class _MyApp extends State<MyApp> {
                                     visibleYn02.value = false;
                                     visibleYn04.value = false;
                                     visibleYn05.value = false;
+                                    visibleYn06.value = false;
 
                                     boolList.value = !boolList.value ;
                                   }
@@ -233,6 +275,7 @@ class _MyApp extends State<MyApp> {
                                     visibleYn02.value = false;
                                     visibleYn03.value = false;
                                     visibleYn05.value = false;
+                                    visibleYn06.value = false;
 
                                     boolList.value = !boolList.value ;
                                   }
@@ -244,6 +287,19 @@ class _MyApp extends State<MyApp> {
                                     visibleYn02.value = false;
                                     visibleYn03.value = false;
                                     visibleYn04.value = false;
+                                    visibleYn06.value = false;
+
+                                    boolList.value = !boolList.value ;
+                                  }
+                                  else if (title[index].elementAt(1).toString() ==
+                                      title[60].elementAt(1).toString()) {
+                                    visibleYn06.value = !visibleYn06.value;
+
+                                    visibleYn01.value = false;
+                                    visibleYn02.value = false;
+                                    visibleYn03.value = false;
+                                    visibleYn04.value = false;
+                                    visibleYn05.value = false;
 
                                     boolList.value = !boolList.value ;
                                   }
@@ -331,6 +387,7 @@ class _MyApp extends State<MyApp> {
               visibleYn03.value = false;
               visibleYn04.value = false;
               visibleYn05.value = false;
+              visibleYn06.value = false;
             }
             setState(() {
               for(var i =0; i < title.length; i++){
