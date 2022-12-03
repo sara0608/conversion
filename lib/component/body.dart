@@ -17,10 +17,12 @@ import 'userSetting.dart';
 
   @override
   Widget build(BuildContext context) {
-    var target = Conversion().changeConvertValue(1);
-    var unit = Expression().changetarget();
-    String selectedUnit = Expression().changeTargetItem('');
-    String selectedTarget = "";
+    var target = Conversion().changeConvertValue();
+    var unit = Expression().getTargetList();
+    String selectedUnit = Expression().getTargetItem();
+    String selectedTarget = Conversion().getConvertValue().toString();
+
+    FocusNode textFocus = FocusNode();
 
     List<DropdownMenuItem<String>> menuItems = [];
     for(String key in unit.keys){
@@ -41,16 +43,33 @@ import 'userSetting.dart';
               children: [
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.all(5),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        textStyle: const TextStyle(fontSize: 20),
-                        primary: userSetting().getColor(),
-                        alignment: Alignment.centerRight,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))
+                    padding: EdgeInsets.all(10),
+                    child: TextField(
+                      controller: TextEditingController(text: selectedTarget),
+                      textAlign: TextAlign.right,
+                      textAlignVertical: TextAlignVertical.center,
+                      //focusNode: textFocus,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: userSetting().getColor(),
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(10),
+                        hintText: "1",
+                        hintStyle: TextStyle(color: Colors.white54),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                        ),
                       ),
-                      onPressed: () {},
-                      child: const Text('5'),
+                      keyboardType: TextInputType.number,
+                      style: TextStyle(
+                        fontSize: 22.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      onChanged: (newValue){
+                        Conversion().setConvertValue(newValue);
+                        setState(() {});
+                      },
                     ),
                   ),
                 ),
@@ -67,13 +86,13 @@ import 'userSetting.dart';
                       iconSize: 0,
                       onChanged: (String? newValue) {
                         setState(() {
-                          Expression().changeTargetItem(newValue!);
+                          Expression().setTargetItem(newValue!);
                         });
                       },
                       items: menuItems,
                     ),
                   )
-                )
+                ),
               ]
           )
         ),
@@ -95,7 +114,7 @@ import 'userSetting.dart';
                           child: Text(
                             target.values.elementAt(index),
                             style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

@@ -1,3 +1,4 @@
+import 'package:conversion/component/conversion.dart';
 import 'package:flutter/material.dart';
 import 'package:conversion/component/body.dart';
 import 'package:conversion/component/expression.dart';
@@ -69,7 +70,9 @@ class _MyApp extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
           appBar: AppBar(
-              title: Text(appTitle),
+              title: Text(appTitle,
+                  style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)
+              ),
               backgroundColor: userSetting().getColor(),
               centerTitle: true,
           ),
@@ -98,6 +101,7 @@ class _MyApp extends State<MyApp> {
                             dense: true,
                             onTap: () {
                               Expression().setExpression(title[index].elementAt(2).toString());
+                              Conversion().setConvertValue("1");
                               Navigator.pop(context);
                               setState(() {});
                             },
@@ -121,6 +125,7 @@ class _MyApp extends State<MyApp> {
                             dense: true,
                             onTap: () {
                               Expression().setExpression(title[index].elementAt(2).toString());
+                              Conversion().setConvertValue("1");
                               Navigator.pop(context);
                               setState(() {});
                             },
@@ -144,6 +149,7 @@ class _MyApp extends State<MyApp> {
                                 dense: true,
                                 onTap: () {
                                   Expression().setExpression(title[index].elementAt(2).toString());
+                                  Conversion().setConvertValue("1");
                                   Navigator.pop(context);
                                   setState(() {});
                                 },
@@ -167,6 +173,7 @@ class _MyApp extends State<MyApp> {
                                 dense: true,
                                 onTap: () {
                                   Expression().setExpression(title[index].elementAt(2).toString());
+                                  Conversion().setConvertValue("1");
                                   Navigator.pop(context);
                                   setState(() {});
                                 },
@@ -190,6 +197,7 @@ class _MyApp extends State<MyApp> {
                                 dense: true,
                                 onTap: () {
                                   Expression().setExpression(title[index].elementAt(2).toString());
+                                  Conversion().setConvertValue("1");
                                   Navigator.pop(context);
                                   setState(() {});
                                 },
@@ -213,6 +221,7 @@ class _MyApp extends State<MyApp> {
                               dense: true,
                               onTap: () {
                                 Expression().setExpression(title[index].elementAt(2).toString());
+                                Conversion().setConvertValue("1");
                                 Navigator.pop(context);
                                 setState(() {});
                               },

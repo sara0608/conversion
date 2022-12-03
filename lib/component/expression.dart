@@ -16,15 +16,15 @@ class Expression{
     return expression_target;
   }
 
-  changeTargetItem(String _targetItem){
+  setTargetItem(String _targetItem){
+    expression_target_item = _targetItem;
+  }
 
-    if(_targetItem != ''){
-      expression_target_item = _targetItem;
-    }
+  getTargetItem(){
     return expression_target_item;
   }
 
-  changetarget(){
+  getTargetList(){
     var items = {};
 
     /* 기본 */
