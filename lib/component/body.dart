@@ -1,6 +1,7 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 import 'expression.dart';
 import 'conversion.dart';
 import 'userSetting.dart';
@@ -24,11 +25,12 @@ import 'userSetting.dart';
 
     FocusNode textFocus = FocusNode();
 
+
     List<DropdownMenuItem<String>> menuItems = [];
     for(String key in unit.keys){
       menuItems.add(
           DropdownMenuItem<String>(
-            child: Text( unit[key] ), // the value as text label
+            child: Text( unit[key], style: TextStyle(fontSize: 18,),), // the value as text label
             value: key, // the respective key as value
           )
       );
@@ -80,7 +82,7 @@ import 'userSetting.dart';
                       value: selectedUnit,
                       elevation: 16,
                       underline: Container(
-                        height: 2,
+                        height: 3,
                         color: userSetting().getColor(),
                       ),
                       iconSize: 0,
@@ -97,53 +99,71 @@ import 'userSetting.dart';
           )
         ),
         Expanded(
-          child: ListView.separated(
+          child: ListView.builder(
             itemCount: target.length,
             itemBuilder: (BuildContext context, int index) {
-              return Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                        child: Container(
-                          height: 35,
-                          color: Colors.white,
-                          alignment: Alignment.centerRight,
-                          padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                          child: Text(
-                            target.values.elementAt(index),
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        )
+                return Container(
+                  padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: (index == 0) ? BorderSide(color: userSetting().getColor(),width: 3) : BorderSide.none,
+                      bottom: BorderSide(color: userSetting().getColor(),width: 3)
                     ),
-                    Expanded(
-                        child: Container(
-                          height: 35,
-                          color: Colors.white,
-                          alignment: Alignment.centerLeft,
-                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                          child: Text(
-                            unit.values.elementAt(index),
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        )
+                  ),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                            child: GestureDetector(
+                              child: Container(
+                                height: 35,
+                                color: Colors.white,
+                                alignment: Alignment.centerRight,
+                                padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                child: Text(
+                                  target.values.elementAt(index),
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: unit.keys.elementAt(index)==Expression().getTargetItem() ? Colors.amber : Colors.black ,
+                                  ),
+                                ),
+                              ),
+                              onTap: (){
+                                Clipboard.setData(ClipboardData(text: target.values.elementAt(index)));
+                                Fluttertoast.showToast(
+                                    msg: "클립보드에 복사완료",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.TOP,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.grey,
+                                    textColor: Colors.black,
+                                    fontSize: 16.0
+                                );
+                              },
+                            )
+                        ),
+                        Expanded(
+                            child: Container(
+                              height: 35,
+                              color: Colors.white,
+                              alignment: Alignment.centerLeft,
+                              padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                              child: Text(
+                                unit.values.elementAt(index),
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: unit.keys.elementAt(index)==Expression().getTargetItem() ? Colors.amber : Colors.black ,
+                                ),
+                              ),
+                            )
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              );
+                );
             },
-            separatorBuilder: (BuildContext context, int index) => Divider(
-              color: userSetting().getColor(),
-              height: 5,
-              thickness: 2,
-            ),
           ),
         ),
       ],

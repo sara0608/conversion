@@ -94,7 +94,10 @@ class _MyApp extends State<MyApp> {
                         return Visibility(
                           visible: visibleYn01.value,
                           child: ListTile(
-                            title: Text(title[index].elementAt(1).toString()),
+                            title: Text(
+                                title[index].elementAt(1).toString(),
+                                style: TextStyle(fontSize: 15)
+                            ),
                             leading: Icon(Icons.arrow_right, color: userSetting().getColor()),
                             minLeadingWidth : 10,
                             visualDensity: VisualDensity(vertical: -3),
@@ -118,7 +121,10 @@ class _MyApp extends State<MyApp> {
                         return Visibility(
                           visible: visibleYn02.value,
                           child: ListTile(
-                            title: Text(title[index].elementAt(1).toString()),
+                            title: Text(
+                                title[index].elementAt(1).toString(),
+                                style: TextStyle(fontSize: 15)
+                            ),
                             leading: Icon(Icons.arrow_right, color: userSetting().getColor()),
                             minLeadingWidth : 10,
                             visualDensity: VisualDensity(vertical: -3),
@@ -142,7 +148,10 @@ class _MyApp extends State<MyApp> {
                         return Visibility(
                           visible: visibleYn03.value,
                           child: ListTile(
-                            title: Text(title[index].elementAt(1).toString()),
+                            title: Text(
+                                title[index].elementAt(1).toString(),
+                                style: TextStyle(fontSize: 15)
+                            ),
                             leading: Icon(Icons.arrow_right, color: userSetting().getColor()),
                             minLeadingWidth : 10,
                             visualDensity: VisualDensity(vertical: -3),
@@ -166,7 +175,10 @@ class _MyApp extends State<MyApp> {
                             return Visibility(
                               visible: visibleYn04.value,
                               child: ListTile(
-                                title: Text(title[index].elementAt(1).toString()),
+                                title: Text(
+                                    title[index].elementAt(1).toString(),
+                                    style: TextStyle(fontSize: 15)
+                                ),
                                 leading: Icon(Icons.arrow_right, color: userSetting().getColor()),
                                 minLeadingWidth : 10,
                                 visualDensity: VisualDensity(vertical: -3),
@@ -190,7 +202,10 @@ class _MyApp extends State<MyApp> {
                             return Visibility(
                               visible: visibleYn05.value,
                               child: ListTile(
-                                title: Text(title[index].elementAt(1).toString()),
+                                title: Text(
+                                    title[index].elementAt(1).toString(),
+                                    style: TextStyle(fontSize: 15)
+                                ),
                                 leading: Icon(Icons.arrow_right, color: userSetting().getColor()),
                                 minLeadingWidth : 10,
                                 visualDensity: VisualDensity(vertical: -3),
@@ -214,7 +229,10 @@ class _MyApp extends State<MyApp> {
                           return Visibility(
                             visible: visibleYn06.value,
                             child: ListTile(
-                              title: Text(title[index].elementAt(1).toString()),
+                              title: Text(
+                                  title[index].elementAt(1).toString(),
+                                  style: TextStyle(fontSize: 15)
+                              ),
                               leading: Icon(Icons.arrow_right, color: userSetting().getColor()),
                               minLeadingWidth : 10,
                               visualDensity: VisualDensity(vertical: -3),
@@ -236,7 +254,10 @@ class _MyApp extends State<MyApp> {
                           valueListenable: boolList,
                           builder: (BuildContext context, bool value, Widget? child) {
                             return ListTile(
-                                title: Text(title[index].elementAt(1).toString()),
+                                title: Text(
+                                    title[index].elementAt(1).toString(),
+                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
+                                ),
                                 trailing: Icon(Icons.add_box_rounded, color: userSetting().getColor()),
                                 onTap: () {
 
@@ -318,7 +339,14 @@ class _MyApp extends State<MyApp> {
                       );
                     }
                 ),),
-                Container(
+                Row(
+                    children: <Widget>[
+                      Expanded( child: Divider(height: 5, thickness: 3,)),
+                      Text("  Color  "),
+                      Expanded( child: Divider(height: 5, thickness: 3,)),
+                    ]
+                ),
+                Container(W
                   height: 50,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
