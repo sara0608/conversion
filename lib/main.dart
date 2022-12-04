@@ -1,8 +1,11 @@
-import 'package:conversion/component/conversion.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
+
 import 'package:conversion/component/body.dart';
 import 'package:conversion/component/expression.dart';
 import 'package:conversion/component/userSetting.dart';
+import 'package:conversion/component/conversion.dart';
 
 void main() {
   runApp(MaterialApp(home: MyApp()));
@@ -14,49 +17,72 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyApp extends State<MyApp> {
+
+  final title = [
+    {0, '기본', 'Basic'}         //index : 0
+    , {1, '길이', 'Basic_001'}, {1, '면적', 'Basic_002'}
+    , {1, '체적', 'Basic_003'}, {1, '질량', 'Basic_004'}
+    , {1, '시간', 'Basic_005'}, {1, '속도', 'Basic_006'}
+    , {1, '각',   'Basic_007'}, {1, '유량', 'Basic_008'}
+    , {1, '압력', 'Basic_009'}, {1, '진공압력', 'Basic_010'}
+    , {1, '온도', 'Basic_011'}, {1, '온도차', 'Basic_012'}
+    , {0, '에너지/전기/빛', 'Light'} //index : 13
+    , {2, '에너지', 'Light_001'}, {2, '동력', 'Light_002'}
+    , {2, '전류', 'Light_003'},   {2, '전압', 'Light_004'}
+    , {2, '자기장', 'Light_005'}, {2, '정전용량', 'Light_006'}
+    , {2, '전하량', 'Light_007'}, {2, '자속', 'Light_008'}
+    , {2, '각속도', 'Light_009'}, {2, '인덕턴스', 'Light_010'}
+    , {2, '조도', 'Light_011'},   {2, '휘도', 'Light_012'}
+    , {0, '물리/기계', 'Physics'}      //index : 26
+    , {3, '힘', 'Physics_001'},    {3, '비체적', 'Physics_002'}
+    , {3, '밀도', 'Physics_003'},   {3, '비열', 'Physics_004'}
+    , {3, '가속도', 'Physics_005'}, {3, '표면장력', 'Physics_006'}
+    , {3, '비중량', 'Physics_007'}, {3, '토크', 'Physics_008'}
+    , {0, '기계공학', 'Machine'}       //index : 35
+    , {4, '질량유량', 'Machine_001'}, {4, '엔탈피', 'Machine_002'}
+    , {4, '엔트로피', 'Machine_003'}, {4, '확산계수', 'Machine_004'}
+    , {4, '점성계수', 'Machine_005'}, {4, '동점성계수', 'Machine_006'}
+    , {4, '열전도율', 'Machine_007'}, {4, '투과율', 'Machine_008'}
+    , {4, '열유속', 'Machine_009'},   {4, '열저항', 'Machine_010'}
+    , {4, '열저항율', 'Machine_011'}, {4, '열발생율', 'Machine_012'}
+    , {4, '열용량', 'Machine_013'},   {4, '열전달계수', 'Machine_014'}
+    , {4, '열밀도', 'Machine_015'},   {4, '열차폐', 'Machine_016'}
+    , {0, '방사선', 'Radiation'}        //index : 52
+    , {5, '방사능', 'Radiation_001'},    {5, '조사선량', 'Radiation_002'}
+    , {5, '등가선량', 'Radiation_003'},  {5, '흡수선량', 'Radiation_004'}
+    , {5, '표면오염도', 'Radiation_005'}, {5, '공기오염도', 'Radiation_006'}
+    , {5, '방사능농도', 'Radiation_007'}
+    , {0, '기타', 'Etc'}        //index : 60
+    , {6, '지진크기', 'Etc_001'},    {6, '전송속도', 'Etc_002'}
+    , {6, '저장용량', 'Etc_003'}
+  ];
+
   String appTitle = "길이";
 
   @override
   Widget build(BuildContext context) {
 
-    final title = [
-        {0, '기본', 'Basic'}         //index : 0
-        , {1, '길이', 'Basic_001'}, {1, '면적', 'Basic_002'}
-        , {1, '체적', 'Basic_003'}, {1, '질량', 'Basic_004'}
-        , {1, '시간', 'Basic_005'}, {1, '속도', 'Basic_006'}
-        , {1, '각',   'Basic_007'}, {1, '유량', 'Basic_008'}
-        , {1, '압력', 'Basic_009'}, {1, '진공압력', 'Basic_010'}
-        , {1, '온도', 'Basic_011'}, {1, '온도차', 'Basic_012'}
-      , {0, '에너지/전기/빛', 'Light'} //index : 13
-        , {2, '에너지', 'Light_001'}, {2, '동력', 'Light_002'}
-        , {2, '전류', 'Light_003'},   {2, '전압', 'Light_004'}
-        , {2, '자기장', 'Light_005'}, {2, '정전용량', 'Light_006'}
-        , {2, '전하량', 'Light_007'}, {2, '자속', 'Light_008'}
-        , {2, '각속도', 'Light_009'}, {2, '인덕턴스', 'Light_010'}
-        , {2, '조도', 'Light_011'},   {2, '휘도', 'Light_012'}
-      , {0, '물리/기계', 'Physics'}      //index : 26
-        , {3, '힘', 'Physics_001'},    {3, '비체적', 'Physics_002'}
-        , {3, '밀도', 'Physics_003'},   {3, '비열', 'Physics_004'}
-        , {3, '가속도', 'Physics_005'}, {3, '표면장력', 'Physics_006'}
-        , {3, '비중량', 'Physics_007'}, {3, '토크', 'Physics_008'}
-      , {0, '기계공학', 'Machine'}       //index : 35
-        , {4, '질량유량', 'Machine_001'}, {4, '엔탈피', 'Machine_002'}
-        , {4, '엔트로피', 'Machine_003'}, {4, '확산계수', 'Machine_004'}
-        , {4, '점성계수', 'Machine_005'}, {4, '동점성계수', 'Machine_006'}
-        , {4, '열전도율', 'Machine_007'}, {4, '투과율', 'Machine_008'}
-        , {4, '열유속', 'Machine_009'},   {4, '열저항', 'Machine_010'}
-        , {4, '열저항율', 'Machine_011'}, {4, '열발생율', 'Machine_012'}
-        , {4, '열용량', 'Machine_013'},   {4, '열전달계수', 'Machine_014'}
-        , {4, '열밀도', 'Machine_015'},   {4, '열차폐', 'Machine_016'}
-      , {0, '방사선', 'Radiation'}        //index : 52
-        , {5, '방사능', 'Radiation_001'},    {5, '조사선량', 'Radiation_002'}
-        , {5, '등가선량', 'Radiation_003'},  {5, '흡수선량', 'Radiation_004'}
-        , {5, '표면오염도', 'Radiation_005'}, {5, '공기오염도', 'Radiation_006'}
-        , {5, '방사능농도', 'Radiation_007'}
-      , {0, '기타', 'Etc'}        //index : 60
-        , {6, '지진크기', 'Etc_001'},    {6, '전송속도', 'Etc_002'}
-        , {6, '저장용량', 'Etc_003'}
-    ];
+    // 초기 device 값 셋팅
+    if(!getDeviceYn){
+      getDeviceValue();
+      Timer _timer = Timer.periodic(Duration(microseconds: 1), (timer) {
+        if (customerColor != 0 && expression_target != ""){
+          // 01. 초기값 셋팅 완료
+          getDeviceYn = true;
+
+          // 02. apptitle 값 바인딩
+          for(var i =0; i < title.length; i++){
+            if(title[i].elementAt(2) == Expression().getExpression()){
+              appTitle = title[i].elementAt(1).toString();
+            }
+          }
+
+          // 03. 완료 (timer cancel, setState 주기)
+          setState(() {});
+          timer.cancel();
+        }
+      });
+    }
 
     ValueNotifier<bool> visibleYn01 = ValueNotifier<bool>(false);
     ValueNotifier<bool> visibleYn02 = ValueNotifier<bool>(false);
@@ -346,7 +372,7 @@ class _MyApp extends State<MyApp> {
                       Expanded( child: Divider(height: 5, thickness: 3,)),
                     ]
                 ),
-                Container(W
+                Container(
                   height: 50,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -436,5 +462,7 @@ class _MyApp extends State<MyApp> {
         },
       )
     );
+
+
   }
 }

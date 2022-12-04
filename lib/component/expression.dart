@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'body.dart';
 import 'conversion.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 var expression_target = 'Basic_001';
 var expression_target_item = 'Basic_001_001';
 
 class Expression{
 
-  setExpression(String _target){
+  setExpression(String _target) async{
     expression_target = _target;
     expression_target_item = expression_target + '_001';
+
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString("customerExpression", _target);
   }
 
   getExpression(){
