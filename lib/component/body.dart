@@ -104,6 +104,7 @@ import 'userSetting.dart';
             itemBuilder: (BuildContext context, int index) {
                 return Container(
                   padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                  margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                   decoration: BoxDecoration(
                     border: Border(
                       top: (index == 0) ? BorderSide(color: userSetting().getColor(),width: 3) : BorderSide.none,

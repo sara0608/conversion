@@ -280,15 +280,21 @@ class _MyApp extends State<MyApp> {
                           valueListenable: boolList,
                           builder: (BuildContext context, bool value, Widget? child) {
                             return ListTile(
-                                title: Text(
-                                    title[index].elementAt(1).toString(),
-                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
-                                ),
-                                trailing: Icon(Icons.add_box_rounded, color: userSetting().getColor()),
-                                onTap: () {
+                              title: Text(
+                                  title[index].elementAt(1).toString(),
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
+                              ),
+                              trailing: Icon(Icons.add_box_rounded, color: userSetting().getColor()),
+                              leading: index == 0 ? Icon(Icons.straighten_sharp)
+                                     : index == 13 ? Icon(Icons.electric_bolt)
+                                     : index == 26 ? Icon(Icons.psychology)
+                                     : index == 35 ? Icon(Icons.precision_manufacturing)
+                                     : index == 52 ? Icon(Icons.warning_rounded)
+                                     : Icon(Icons.topic),
+                              minLeadingWidth: 0,
+                              onTap: () {
 
-                                  if (title[index].elementAt(1).toString() ==
-                                      title[0].elementAt(1).toString()) {
+                                  if (index == 0) {
                                     visibleYn01.value = !visibleYn01.value;
 
                                     visibleYn02.value = false;
@@ -299,8 +305,7 @@ class _MyApp extends State<MyApp> {
 
                                     boolList.value = !boolList.value ;
                                   }
-                                  else if (title[index].elementAt(1).toString() ==
-                                      title[13].elementAt(1).toString()) {
+                                  else if (index == 13) {
                                     visibleYn02.value = !visibleYn02.value;
 
                                     visibleYn01.value = false;
@@ -311,8 +316,7 @@ class _MyApp extends State<MyApp> {
 
                                     boolList.value = !boolList.value ;
                                   }
-                                  else if (title[index].elementAt(1).toString() ==
-                                      title[26].elementAt(1).toString()) {
+                                  else if (index == 26) {
                                     visibleYn03.value = !visibleYn03.value;
 
                                     visibleYn01.value = false;
@@ -323,8 +327,7 @@ class _MyApp extends State<MyApp> {
 
                                     boolList.value = !boolList.value ;
                                   }
-                                  else if (title[index].elementAt(1).toString() ==
-                                      title[35].elementAt(1).toString()) {
+                                  else if (index == 35) {
                                     visibleYn04.value = !visibleYn04.value;
 
                                     visibleYn01.value = false;
@@ -335,8 +338,7 @@ class _MyApp extends State<MyApp> {
 
                                     boolList.value = !boolList.value ;
                                   }
-                                  else if (title[index].elementAt(1).toString() ==
-                                      title[52].elementAt(1).toString()) {
+                                  else if (index == 52) {
                                     visibleYn05.value = !visibleYn05.value;
 
                                     visibleYn01.value = false;
@@ -347,8 +349,7 @@ class _MyApp extends State<MyApp> {
 
                                     boolList.value = !boolList.value ;
                                   }
-                                  else if (title[index].elementAt(1).toString() ==
-                                      title[60].elementAt(1).toString()) {
+                                  else if (index == 60) {
                                     visibleYn06.value = !visibleYn06.value;
 
                                     visibleYn01.value = false;
@@ -368,7 +369,7 @@ class _MyApp extends State<MyApp> {
                 Row(
                     children: <Widget>[
                       Expanded( child: Divider(height: 5, thickness: 3,)),
-                      Text("  Color  "),
+                      Text("  Setting  "),
                       Expanded( child: Divider(height: 5, thickness: 3,)),
                     ]
                 ),
