@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 
 import 'package:conversion/component/body.dart';
@@ -90,7 +89,7 @@ class _MyApp extends State<MyApp> {
     ValueNotifier<bool> visibleYn04 = ValueNotifier<bool>(false);
     ValueNotifier<bool> visibleYn05 = ValueNotifier<bool>(false);
     ValueNotifier<bool> visibleYn06 = ValueNotifier<bool>(false);
-    
+
     return MaterialApp(
       title: 'Conversion_if_units',
       debugShowCheckedModeBanner: false,
@@ -101,8 +100,16 @@ class _MyApp extends State<MyApp> {
               ),
               backgroundColor: userSetting().getColor(),
               centerTitle: true,
+              elevation: 0,
           ),
           body: Body(),
+          bottomNavigationBar: Container(
+            height: 60,
+            color: Colors.grey,
+            child: Text("광고부분",
+                style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold, color: Colors.white)
+            ),
+          ),
           drawer: Drawer(
             width: 250,
             child: Column(
@@ -116,7 +123,7 @@ class _MyApp extends State<MyApp> {
                   if(title[index].elementAt(0)==1){
                     return ValueListenableBuilder(
                       valueListenable: visibleYn01,
-                      builder: (BuildContext context, bool value, Widget? child) {
+                      builder: (BuildContext context, bool value, Widget child) {
                         return Visibility(
                           visible: visibleYn01.value,
                           child: ListTile(
@@ -143,7 +150,7 @@ class _MyApp extends State<MyApp> {
                   if(title[index].elementAt(0)==2){
                     return ValueListenableBuilder(
                       valueListenable: visibleYn02,
-                      builder: (BuildContext context, bool value, Widget? child) {
+                      builder: (BuildContext context, bool value, Widget child) {
                         return Visibility(
                           visible: visibleYn02.value,
                           child: ListTile(
@@ -170,7 +177,7 @@ class _MyApp extends State<MyApp> {
                   if(title[index].elementAt(0)==3){
                     return ValueListenableBuilder(
                       valueListenable: visibleYn03,
-                      builder: (BuildContext context, bool value, Widget? child) {
+                      builder: (BuildContext context, bool value, Widget child) {
                         return Visibility(
                           visible: visibleYn03.value,
                           child: ListTile(
@@ -197,7 +204,7 @@ class _MyApp extends State<MyApp> {
                       if(title[index].elementAt(0)==4){
                         return ValueListenableBuilder(
                           valueListenable: visibleYn04,
-                          builder: (BuildContext context, bool value, Widget? child) {
+                          builder: (BuildContext context, bool value, Widget child) {
                             return Visibility(
                               visible: visibleYn04.value,
                               child: ListTile(
@@ -224,7 +231,7 @@ class _MyApp extends State<MyApp> {
                       if(title[index].elementAt(0)==5){
                         return ValueListenableBuilder(
                           valueListenable: visibleYn05,
-                          builder: (BuildContext context, bool value, Widget? child) {
+                          builder: (BuildContext context, bool value, Widget child) {
                             return Visibility(
                               visible: visibleYn05.value,
                               child: ListTile(
@@ -251,7 +258,7 @@ class _MyApp extends State<MyApp> {
                     if(title[index].elementAt(0)==6){
                       return ValueListenableBuilder(
                         valueListenable: visibleYn06,
-                        builder: (BuildContext context, bool value, Widget? child) {
+                        builder: (BuildContext context, bool value, Widget child) {
                           return Visibility(
                             visible: visibleYn06.value,
                             child: ListTile(
@@ -278,7 +285,7 @@ class _MyApp extends State<MyApp> {
                       ValueNotifier<bool> boolList = ValueNotifier<bool> (true);
                       return ValueListenableBuilder(
                           valueListenable: boolList,
-                          builder: (BuildContext context, bool value, Widget? child) {
+                          builder: (BuildContext context, bool value, Widget child) {
                             return ListTile(
                               title: Text(
                                   title[index].elementAt(1).toString(),

@@ -24,8 +24,8 @@ class userSetting{
 getDeviceValue() async{
   // 01. 값 불러오기
   final prefs = await SharedPreferences.getInstance();
-  int? _customerColor = prefs.getInt('customerColor');
-  String? _customerExpression = prefs.getString('customerExpression');
+  int _customerColor = prefs.getInt('customerColor');
+  String _customerExpression = prefs.getString('customerExpression');
 
   // 02. color 셋팅
   if (_customerColor == null){
