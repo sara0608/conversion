@@ -6,7 +6,7 @@ import 'package:keyboard_actions/keyboard_actions.dart';
 import 'expression.dart';
 import 'conversion.dart';
 import 'userSetting.dart';
-
+import 'keyboard.dart';
 
   class Body extends StatefulWidget {
     final bool isDialog;
@@ -19,37 +19,30 @@ import 'userSetting.dart';
 
     final FocusNode textFocus = FocusNode();
 
+  @override
+  Widget build(BuildContext context) {
+    var target = Conversion().changeConvertValue();
+    var unit = Expression().getTargetList();
+    String selectedUnit = Expression().getTargetItem();
+    final selectedTarget = ValueNotifier<String>(Conversion().getConvertValue().toString());
+
     KeyboardActionsConfig _buildConfig(BuildContext context) {
       return KeyboardActionsConfig(
         keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
         keyboardBarColor: Colors.grey[200],
         nextFocus: true,
         actions: [
-          KeyboardActionsItem(focusNode: textFocus, toolbarButtons: [
-                (node) {
-              return GestureDetector(
-                onTap: () => node.unfocus(),
-                child: Container(
-                  color: Colors.black,
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    "DONE",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              );
-            }
-          ]),
+          KeyboardActionsItem(
+            focusNode: textFocus,
+            displayActionBar: false,
+            footerBuilder: (_) => NumericKeyboard(
+              focusNode: textFocus,
+              notifier: selectedTarget,
+            ),
+          ),
         ],
       );
     }
-
-  @override
-  Widget build(BuildContext context) {
-    var target = Conversion().changeConvertValue();
-    var unit = Expression().getTargetList();
-    String selectedUnit = Expression().getTargetItem();
-    String selectedTarget = Conversion().getConvertValue().toString();
 
     List<DropdownMenuItem<String>> menuItems = [];
     for(String key in unit.keys){
@@ -73,32 +66,28 @@ import 'userSetting.dart';
                   children: [
                     Expanded(
                       child: Container(
-                        padding: EdgeInsets.all(10),
-                        child: TextField(
-                          controller: TextEditingController(text: selectedTarget),
-                          textAlign: TextAlign.right,
-                          textAlignVertical: TextAlignVertical.center,
+                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        child: KeyboardCustomInput<String>(
                           focusNode: textFocus,
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: userSetting().getColor(),
-                            isDense: true,
-                            contentPadding: EdgeInsets.all(10),
-                            hintText: "1",
-                            hintStyle: TextStyle(color: Colors.white54),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                            ),
-                          ),
-                          keyboardType: TextInputType.number,
-                          style: TextStyle(
-                            fontSize: 22.0,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          onChanged: (newValue){
-                            Conversion().setConvertValue(newValue);
-                            setState(() {});
+                          notifier: selectedTarget,
+                          builder: (context, val, hasFocus) {
+                            // list setState 추가
+                            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                              setState(() {});
+                            });
+                            return Container(
+                              alignment: Alignment.centerRight,
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: userSetting().getColor(),
+                                  borderRadius: BorderRadius.all(Radius.circular(20))
+                              ),
+                              child: Text(val, style:TextStyle(
+                                  fontSize: 22.0,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                              ),
+                            );
                           },
                         ),
                       ),
