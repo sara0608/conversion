@@ -59,7 +59,18 @@ import 'keyboard.dart';
       child: Column(
         children: <Widget>[
           Container(
-            height: 65,
+              height: 65,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.7),
+                    spreadRadius: 0,
+                    blurRadius: 5.0,
+                    offset: Offset(0, 10), // changes position of shadow
+                  ),
+                ],
+              ),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
@@ -77,7 +88,7 @@ import 'keyboard.dart';
                             });
                             return Container(
                               alignment: Alignment.centerRight,
-                              padding: EdgeInsets.all(10),
+                              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                               decoration: BoxDecoration(
                                   color: userSetting().getColor(),
                                   borderRadius: BorderRadius.all(Radius.circular(20))

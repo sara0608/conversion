@@ -96,7 +96,7 @@ class _MyApp extends State<MyApp> {
       home: Scaffold(
           appBar: AppBar(
               title: Text(appTitle,
-                  style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)
+                  style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w700)
               ),
               backgroundColor: userSetting().getColor(),
               centerTitle: true,
@@ -137,7 +137,7 @@ class _MyApp extends State<MyApp> {
                             dense: true,
                             onTap: () {
                               Expression().setExpression(title[index].elementAt(2).toString());
-                              Conversion().setConvertValue("1");
+                              Conversion().setConvertValue("");
                               Navigator.pop(context);
                               setState(() {});
                             },
@@ -164,7 +164,7 @@ class _MyApp extends State<MyApp> {
                             dense: true,
                             onTap: () {
                               Expression().setExpression(title[index].elementAt(2).toString());
-                              Conversion().setConvertValue("1");
+                              Conversion().setConvertValue("");
                               Navigator.pop(context);
                               setState(() {});
                             },
@@ -191,7 +191,7 @@ class _MyApp extends State<MyApp> {
                                 dense: true,
                                 onTap: () {
                                   Expression().setExpression(title[index].elementAt(2).toString());
-                                  Conversion().setConvertValue("1");
+                                  Conversion().setConvertValue("");
                                   Navigator.pop(context);
                                   setState(() {});
                                 },
@@ -218,7 +218,7 @@ class _MyApp extends State<MyApp> {
                                 dense: true,
                                 onTap: () {
                                   Expression().setExpression(title[index].elementAt(2).toString());
-                                  Conversion().setConvertValue("1");
+                                  Conversion().setConvertValue("");
                                   Navigator.pop(context);
                                   setState(() {});
                                 },
@@ -245,7 +245,7 @@ class _MyApp extends State<MyApp> {
                                 dense: true,
                                 onTap: () {
                                   Expression().setExpression(title[index].elementAt(2).toString());
-                                  Conversion().setConvertValue("1");
+                                  Conversion().setConvertValue("");
                                   Navigator.pop(context);
                                   setState(() {});
                                 },
@@ -272,7 +272,7 @@ class _MyApp extends State<MyApp> {
                               dense: true,
                               onTap: () {
                                 Expression().setExpression(title[index].elementAt(2).toString());
-                                Conversion().setConvertValue("1");
+                                Conversion().setConvertValue("");
                                 Navigator.pop(context);
                                 setState(() {});
                               },
@@ -387,22 +387,22 @@ class _MyApp extends State<MyApp> {
                     children: [
                       InkWell(
                         onTap: () {
-                          userSetting().setColor(Colors.pink);
+                          userSetting().setColor(Color(0xFFFA6257));
                           setState(() {});
                         }, // Handle your callback
                         child: Padding(
                             padding: EdgeInsets.fromLTRB(0,10,10,10),
-                            child: Ink(height: 30, width: 30, color: Colors.pink)
+                            child: Ink(height: 30, width: 30, color: Color(0xFFFA6257))
                         ),
                       ),
                       InkWell(
                         onTap: () {
-                          userSetting().setColor(Colors.deepOrange);
+                          userSetting().setColor(Color(0xFFffb921));
                           setState(() {});
                         }, // Handle your callback
                         child: Padding(
                             padding: EdgeInsets.fromLTRB(0,10,10,10),
-                            child: Ink(height: 30, width: 30, color: Colors.deepOrange)
+                            child: Ink(height: 30, width: 30, color: Color(0xFFffb921))
                         ),
                       ),
                       InkWell(
