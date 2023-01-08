@@ -137,7 +137,7 @@ class _MyApp extends State<MyApp> {
                             dense: true,
                             onTap: () {
                               Expression().setExpression(title[index].elementAt(2).toString());
-                              Conversion().setConvertValue("");
+                              Conversion().setConvertValue("", "C");
                               Navigator.pop(context);
                               setState(() {});
                             },
@@ -164,7 +164,7 @@ class _MyApp extends State<MyApp> {
                             dense: true,
                             onTap: () {
                               Expression().setExpression(title[index].elementAt(2).toString());
-                              Conversion().setConvertValue("");
+                              Conversion().setConvertValue("", "C");
                               Navigator.pop(context);
                               setState(() {});
                             },
@@ -191,7 +191,7 @@ class _MyApp extends State<MyApp> {
                                 dense: true,
                                 onTap: () {
                                   Expression().setExpression(title[index].elementAt(2).toString());
-                                  Conversion().setConvertValue("");
+                                  Conversion().setConvertValue("", "C");
                                   Navigator.pop(context);
                                   setState(() {});
                                 },
@@ -218,7 +218,7 @@ class _MyApp extends State<MyApp> {
                                 dense: true,
                                 onTap: () {
                                   Expression().setExpression(title[index].elementAt(2).toString());
-                                  Conversion().setConvertValue("");
+                                  Conversion().setConvertValue("", "C");
                                   Navigator.pop(context);
                                   setState(() {});
                                 },
@@ -245,7 +245,7 @@ class _MyApp extends State<MyApp> {
                                 dense: true,
                                 onTap: () {
                                   Expression().setExpression(title[index].elementAt(2).toString());
-                                  Conversion().setConvertValue("");
+                                  Conversion().setConvertValue("", "C");
                                   Navigator.pop(context);
                                   setState(() {});
                                 },
@@ -272,7 +272,7 @@ class _MyApp extends State<MyApp> {
                               dense: true,
                               onTap: () {
                                 Expression().setExpression(title[index].elementAt(2).toString());
-                                Conversion().setConvertValue("");
+                                Conversion().setConvertValue("", "C");
                                 Navigator.pop(context);
                                 setState(() {});
                               },
@@ -397,12 +397,12 @@ class _MyApp extends State<MyApp> {
                       ),
                       InkWell(
                         onTap: () {
-                          userSetting().setColor(Color(0xFFffb921));
+                          userSetting().setColor(Color(0xFFeda200));
                           setState(() {});
                         }, // Handle your callback
                         child: Padding(
                             padding: EdgeInsets.fromLTRB(0,10,10,10),
-                            child: Ink(height: 30, width: 30, color: Color(0xFFffb921))
+                            child: Ink(height: 30, width: 30, color: Color(0xFFeda200))
                         ),
                       ),
                       InkWell(

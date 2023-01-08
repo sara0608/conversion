@@ -22,9 +22,7 @@ class NumericKeyboard extends StatelessWidget
   Size get preferredSize => Size.fromHeight(280);
 
   void _onTap(String text, IconData icon) {
-    final currentValue = notifier.value;
-    print(text);
-    print(icon);
+    final currentValue = Conversion().getConvertValue().toString();
 
     // DONE
     if (text == "Done") {
@@ -32,47 +30,16 @@ class NumericKeyboard extends StatelessWidget
     }
     // <-
     else if(icon != null){
-      if (currentValue.length != 0){
-        var backValue = currentValue.substring(0,currentValue.length-1);
-        updateValue(backValue);
-        Conversion().setConvertValue(backValue);
-      }
-    }
-    // +/-
-    else if(text == "+/-"){
-      if(currentValue.length != 0){
-        if(currentValue.substring(0,1) == "-"){
-          updateValue(currentValue.substring(1,currentValue.length));
-          Conversion().setConvertValue(currentValue.substring(1,currentValue.length));
-        }else{
-          updateValue("-" + currentValue);
-          Conversion().setConvertValue("-" + currentValue);
-        }
-      }
+      Conversion().setConvertValue(currentValue, "back");
     }
     // C
     else if (text == "C") {
       updateValue("");
-      Conversion().setConvertValue("");
+      Conversion().setConvertValue("", text);
     }
-    //.
-    else if (text == ".") {
-      if(currentValue.length == 0){ // 01. 맨처음 시작이 소수점일 경우
-        updateValue("0.");
-        Conversion().setConvertValue("0.");
-      }else if(!currentValue.contains(".")){
-        updateValue(currentValue + text);
-        Conversion().setConvertValue(currentValue + text);
-      }
-    }
-    //사칙연산 눌렀을때
-    else if (text == "/" || text == "*" || text == "-" || text == "+"){
-      updateValue(currentValue + text);
-    }
-    // 숫자 클릭시
+    // 숫자 클릭시 & 사칙연산 눌렀을때 & dot & +/-
     else {
-      updateValue(currentValue + text);
-      Conversion().setConvertValue(currentValue + text);
+      Conversion().setConvertValue(currentValue, text);
     }
   }
 
@@ -93,10 +60,10 @@ class NumericKeyboard extends StatelessWidget
               mainAxisSpacing: 5,
             ),
             children: [
-              _buildButton(text: "C"),
-              _buildButton(text: "+/-"),
-              _buildButton(icon: Icons.keyboard_backspace, color: Color(0xFFBAB572)),
               _buildButton(text: "Done", color: Color(0xFFBAB572)),
+              _buildButton(text: "C"),
+              _buildButton(icon: Icons.keyboard_backspace),
+              _buildButton(text: "=", color: Color(0xFFBAB572)),
               _buildButton(text: "7"),
               _buildButton(text: "8"),
               _buildButton(text: "9"),
@@ -109,8 +76,8 @@ class NumericKeyboard extends StatelessWidget
               _buildButton(text: "2"),
               _buildButton(text: "3"),
               _buildButton(text: "-"),
+              _buildButton(text: "+/-"),
               _buildButton(text: "0"),
-              _buildButton(text: "00"),
               _buildButton(text: "."),
               _buildButton(text: "+"),
             ],

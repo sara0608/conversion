@@ -3,33 +3,144 @@ import 'package:intl/intl.dart';
 import 'body.dart';
 
 String convert_value = "1";
-String convert_label_value = "1";
+
+String first_value = "";
+String second_value = "";
+String caculate_operation = "";
 
 class Conversion{
 
-  setConvertValue(String _convert_value){
-
-    if(_convert_value == null || _convert_value == ""){
+  setConvertValue(String _convert_value, String _keyboard){
+    // 01. 값 리셋할 경우 ( C )
+    if(_keyboard == "C"){
       convert_value = "1";
-      convert_label_value = _convert_value;
+      first_value = "";
+      second_value = "";
+      caculate_operation = "";
+    // 02. 사칙연산 로직 사용
+    }else if(caculate_operation != ""){
+      if(_keyboard == "="){
+        if(second_value == ""){
+          first_value = "";
+          caculate_operation = "";
+        }else{
+          double return_value = 0;
+          if(caculate_operation == "/"){
+            return_value = double.parse(first_value)/double.parse(second_value);
+          }else if(caculate_operation == "*"){
+            return_value = double.parse(first_value)*double.parse(second_value);
+          }else if(caculate_operation == "-"){
+            return_value = double.parse(first_value)-double.parse(second_value);
+          }else if(caculate_operation == "+"){
+            return_value = double.parse(first_value)+double.parse(second_value);
+          }
+        }
+      }else if(_keyboard == "/" || _keyboard == "*" || _keyboard == "-" || _keyboard == "+"){
+        if(second_value == ""){
+          caculate_operation = _keyboard;
+        }
+      }else if(_keyboard == "back"){
+        if(second_value == ""){
+          caculate_operation = "";
+        }else{
+          var backValue = second_value.substring(0,second_value.length-1);
+          second_value = backValue;
+        }
+      }else{
+        second_value = second_value + _keyboard;
+      }
+
+      if(second_value != ""){
+        if(caculate_operation == "/"){
+          convert_value = (double.parse(first_value)/double.parse(second_value)).toString();
+        }else if(caculate_operation == "*"){
+          convert_value = (double.parse(first_value)*double.parse(second_value)).toString();
+        }else if(caculate_operation == "-"){
+          convert_value = (double.parse(first_value)-double.parse(second_value)).toString();
+        }else if(caculate_operation == "+"){
+          convert_value = (double.parse(first_value)+double.parse(second_value)).toString();
+        }
+      }
+    // 03. 사칙연산 로직 미사용
     }else{
-      convert_value = _convert_value;
-      convert_label_value = _convert_value;
+      if(_keyboard == "="){}
+      else if(_keyboard == "/" || _keyboard == "*" || _keyboard == "-" || _keyboard == "+"){
+        if(first_value == ""){
+          first_value = "0";
+        }
+        caculate_operation = _keyboard;
+      }else if(_keyboard == "back"){
+        if(first_value.length <=1 || (first_value.length == 2 && first_value.contains("-"))) {
+          first_value = "";
+        }else{
+          var backValue = first_value.substring(0,first_value.length-1);
+          first_value = backValue;
+        }
+      }else if(_keyboard == "."){
+        if(first_value.length == 0){
+          first_value = "0.";
+        }else if(!first_value.contains(".")){
+          first_value = first_value + _keyboard;
+        }
+      }else if(_keyboard == "+/-"){
+        if(first_value == "" || first_value == "0"){
+          first_value = "0";
+        }else{
+          if(!first_value.contains("-")){
+            first_value = "-" + first_value;
+          }else{
+            first_value = first_value.replaceAll("-", "");
+          }
+        }
+      }else{
+        if(first_value.length >= 11){
+          first_value = first_value;
+        }else{
+          first_value = first_value + _keyboard;
+        }
+      }
+
+      if(first_value == ""){
+        convert_value = "1";
+      }else{
+        convert_value = first_value;
+      }
+
     }
   }
 
   getConvertValue(){
-    return convert_label_value;
+    if(first_value == ""){
+      return first_value; //"" 일시 format 에러
+    }else if(caculate_operation == ""){
+      //포맷 하면서 dot 이 없어짐
+      if(first_value.indexOf(".") != -1){
+        return display_value_format(double.parse(first_value.substring(0,first_value.indexOf(".")))) + first_value.substring(first_value.indexOf("."),first_value.length);
+      }else{
+        return display_value_format(double.parse(first_value));
+      }
+    }else{
+      if(second_value == ""){
+        return display_value_format(double.parse(first_value)) + caculate_operation;
+      }else{
+        return display_value_format(double.parse(first_value)) + caculate_operation +display_value_format(double.parse(second_value));
+      }
+    }
+  }
+
+  display_value_format(double value){
+    var f = NumberFormat('###,###,###.##########');
+    return f.format(value).toString();
   }
 
   value_format(double value){
-    var f = NumberFormat('###,###,###.##########');
+    var f = NumberFormat('###,###,###.########');
     return f.format(value).toString();
   }
 
   changeConvertValue(){
     var convert_items = {};
-    String _convert_value = convert_value;
+    double _convert_value = double.parse(convert_value);
 
     //02. 단위 변환하기
       // 길이
@@ -48,35 +159,35 @@ class Conversion{
         };
 
         if(expression_target_item == 'Basic_001_001'){  //m(meter)
-          /* m(meter) */        convert_items["Basic_001_001"] = value_format(double.parse(_convert_value) * 1);
-          /* mm */              convert_items["Basic_001_002"] = value_format(double.parse(_convert_value) * 1000);
-          /* cm */              convert_items["Basic_001_003"] = value_format(double.parse(_convert_value) * 100);
-          /* km */              convert_items["Basic_001_004"] = value_format(double.parse(_convert_value) / 1000);
-          /* μm */              convert_items["Basic_001_005"] = value_format(double.parse(_convert_value) * 1000000);
-          /* nm */              convert_items["Basic_001_006"] = value_format(double.parse(_convert_value) * 1);
-          /* in(inch) */        convert_items["Basic_001_007"] = value_format(double.parse(_convert_value) * 1);
-          /* ft(feet) */        convert_items["Basic_001_008"] = value_format(double.parse(_convert_value) * 1);
-          /* ft(US survey) */   convert_items["Basic_001_009"] = value_format(double.parse(_convert_value) * 1);
-          /* yd(yard) */        convert_items["Basic_001_010"] = value_format(double.parse(_convert_value) * 1);
-          /* mil */             convert_items["Basic_001_011"] = value_format(double.parse(_convert_value) * 1);
-          /* mi(mile) */        convert_items["Basic_001_012"] = value_format(double.parse(_convert_value) * 1);
-          /* mile(US survey) */ convert_items["Basic_001_013"] = value_format(double.parse(_convert_value) * 1);
-          /* mile(UK) */        convert_items["Basic_001_014"] = value_format(double.parse(_convert_value) * 1);
-          /* Aungstrom */       convert_items["Basic_001_015"] = value_format(double.parse(_convert_value) * 1);
-          /* fermi */           convert_items["Basic_001_016"] = value_format(double.parse(_convert_value) * 1);
-          /* pc(parsec) */      convert_items["Basic_001_017"] = value_format(double.parse(_convert_value) * 1);
-          /* kpc */             convert_items["Basic_001_018"] = value_format(double.parse(_convert_value) * 1);
-          /* Mpc */             convert_items["Basic_001_019"] = value_format(double.parse(_convert_value) * 1);
-          /* au */              convert_items["Basic_001_020"] = value_format(double.parse(_convert_value) * 1);
-          /* fathom */          convert_items["Basic_001_021"] = value_format(double.parse(_convert_value) * 1);
-          /* rod */             convert_items["Basic_001_022"] = value_format(double.parse(_convert_value) * 1);
-          /* furlong */         convert_items["Basic_001_023"] = value_format(double.parse(_convert_value) * 1);
-          /* 자 */              convert_items["Basic_001_024"] = value_format(double.parse(_convert_value) * 1);
-          /* 간 */              convert_items["Basic_001_025"] = value_format(double.parse(_convert_value) * 1);
-          /* 리 */              convert_items["Basic_001_026"] = value_format(double.parse(_convert_value) * 1);
-          /* 광년 */             convert_items["Basic_001_027"] = value_format(double.parse(_convert_value) * 1);
-          /* chain */           convert_items["Basic_001_028"] = value_format(double.parse(_convert_value) * 1);
-          /* 해리 */             convert_items["Basic_001_029"] = value_format(double.parse(_convert_value) * 1);
+          /* m(meter) */        convert_items["Basic_001_001"] = value_format(_convert_value * 1);
+          /* mm */              convert_items["Basic_001_002"] = value_format(_convert_value * 1000);
+          /* cm */              convert_items["Basic_001_003"] = value_format(_convert_value * 100);
+          /* km */              convert_items["Basic_001_004"] = value_format(_convert_value / 1000);
+          /* μm */              convert_items["Basic_001_005"] = value_format(_convert_value * 1000000);
+          /* nm */              convert_items["Basic_001_006"] = value_format(_convert_value * 1000000000);
+          /* in(inch) */        convert_items["Basic_001_007"] = value_format(_convert_value * 39.37);
+          /* ft(feet) */        convert_items["Basic_001_008"] = value_format(_convert_value * 3.2808);
+          /* ft(US survey) */   convert_items["Basic_001_009"] = value_format(_convert_value * 1);
+          /* yd(yard) */        convert_items["Basic_001_010"] = value_format(_convert_value * 1);
+          /* mil */             convert_items["Basic_001_011"] = value_format(_convert_value * 1);
+          /* mi(mile) */        convert_items["Basic_001_012"] = value_format(_convert_value * 1);
+          /* mile(US survey) */ convert_items["Basic_001_013"] = value_format(_convert_value * 1);
+          /* mile(UK) */        convert_items["Basic_001_014"] = value_format(_convert_value * 1);
+          /* Aungstrom */       convert_items["Basic_001_015"] = value_format(_convert_value * 1);
+          /* fermi */           convert_items["Basic_001_016"] = value_format(_convert_value * 1);
+          /* pc(parsec) */      convert_items["Basic_001_017"] = value_format(_convert_value * 1);
+          /* kpc */             convert_items["Basic_001_018"] = value_format(_convert_value * 1);
+          /* Mpc */             convert_items["Basic_001_019"] = value_format(_convert_value * 1);
+          /* au */              convert_items["Basic_001_020"] = value_format(_convert_value * 1);
+          /* fathom */          convert_items["Basic_001_021"] = value_format(_convert_value * 1);
+          /* rod */             convert_items["Basic_001_022"] = value_format(_convert_value * 1);
+          /* furlong */         convert_items["Basic_001_023"] = value_format(_convert_value * 1);
+          /* 자 */              convert_items["Basic_001_024"] = value_format(_convert_value * 1);
+          /* 간 */              convert_items["Basic_001_025"] = value_format(_convert_value * 1);
+          /* 리 */              convert_items["Basic_001_026"] = value_format(_convert_value * 1);
+          /* 광년 */             convert_items["Basic_001_027"] = value_format(_convert_value * 1);
+          /* chain */           convert_items["Basic_001_028"] = value_format(_convert_value * 1);
+          /* 해리 */             convert_items["Basic_001_029"] = value_format(_convert_value * 1);
         }
 
       }
